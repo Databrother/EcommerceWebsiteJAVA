@@ -5,6 +5,8 @@ public class Product {
     public String name;
     public double price;
 
+    public int quantity;
+
     public void setName(String name){
         this.name= name;
     }
@@ -23,4 +25,6 @@ public class Product {
     public double getPrice(){
         return price;
     }
+    public int getQuantity(){return quantity;}
+    public void setQuantity( int quantity){ this.quantity= quantity;}
 }
