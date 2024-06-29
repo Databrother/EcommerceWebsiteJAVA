@@ -1,19 +1,23 @@
 package com.ecommerce;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 
 public class Customer {
-    private int customerID;
+    private final UUID customerID;
     private String name;
     private HashMap<Product, Integer> purchaseCart;
 
-    public void setName(String name) {
-        this.name = name;
+    public Customer(){
+    this.name = "";
+    this.customerID = UUID.randomUUID();
+    this.purchaseCart = new HashMap<>();
+
     }
 
-    public void setProductID(int customerID) {
-        this.customerID = customerID;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setPurchaseCart(HashMap<Product, Integer> chart) {
@@ -24,7 +28,7 @@ public class Customer {
         return name;
     }
 
-    public int getCustomerID() {
+    public UUID getCustomerID() {
         return customerID;
     }
 
@@ -36,8 +40,10 @@ public class Customer {
         if (product.getQuantity()< quantity){
             System.out.println("number of left product is "+ product.getQuantity());
         }
-        if (purchaseCart.containsKey(product)) {
-            product.quantity += quantity;
+        else if (purchaseCart.containsKey(product)) {
+            purchaseCart.put(product,purchaseCart.get(product)+quantity);
+        } else {
+            purchaseCart.put(product,quantity);
         }
 
 
@@ -56,16 +62,17 @@ public class Customer {
             System.out.println("this product isn't in your chart");
         }
     }
-    public void calculateTotal(Product product ){ // boots 1 / caps 2 / shoes 3
+    public double calculateTotal(){ // boots 1 / caps 2 / shoes 3
         int quantity = 0;
         double price = 0;
         for(Map.Entry<Product,Integer> entry: purchaseCart.entrySet()){
-             int getQuantity = entry.getKey().getQuantity();
-            quantity = getQuantity + quantity;
+             int getQuantity = entry.getValue();
             double getPrice = entry.getKey().getPrice();
-            price = getPrice + price;
+            double totalPerProduct =  getPrice*getQuantity;
+            price = totalPerProduct +price;
         }
-        double totalPrice = quantity * product.price;
+
+        return price;
     }
     public void makeOrder(Customer customer, Product product){
 
