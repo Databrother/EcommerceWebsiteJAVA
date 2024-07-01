@@ -1,7 +1,10 @@
 package com.ecommerce;
+import com.ecommerce.orders.Order;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
 
 
 public class Customer {
@@ -14,6 +17,21 @@ public class Customer {
     this.customerID = UUID.randomUUID();
     this.purchaseCart = new HashMap<>();
 
+    }
+
+    public Customer(String name) {
+        this.customerID = UUID.randomUUID();
+        this.name = name;
+        this.purchaseCart = new HashMap<>();
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "customerID=" + customerID +
+                ", name='" + name + '\'' +
+                ", purchaseCart=" + purchaseCart +
+                '}';
     }
 
     public void setName(String name) {
@@ -32,30 +50,46 @@ public class Customer {
         return customerID;
     }
 
-    public HashMap<Product, Integer> getPurchaseCart() {
-        return purchaseCart;
+    public void getPurchaseCart() {
+    for(Map.Entry<Product, Integer> entry : purchaseCart.entrySet()){
+        Product product = entry.getKey();
+        int quantity = entry.getValue();
+        System.out.println("you have " + quantity +  " " + product.getName() + " in your cart");
+    }
+
+    }
+    public boolean purchaseCartIsEmpty() {
+        if (purchaseCart.isEmpty()) {
+            System.out.println("Your cart is empty.");
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void addToCart(Product product, int quantity) {
-        if (product.getQuantity()< quantity){
+        if (product.getQuantity()< quantity){ // check if item is not out of stock
             System.out.println("number of left product is "+ product.getQuantity());
         }
         else if (purchaseCart.containsKey(product)) {
             purchaseCart.put(product,purchaseCart.get(product)+quantity);
+            System.out.println(purchaseCart.get(product) + " " + product + " have been added successfully");
         } else {
             purchaseCart.put(product,quantity);
+            System.out.println(quantity + " " +  product + "has been added successfully");
         }
+
 
 
     }
 
     public void removeFromCart(Product product, int quantity) {
         if (purchaseCart.containsKey(product)) {
-            int currentQuantity = product.getQuantity();
+            int currentQuantity = purchaseCart.get(product);
             if (currentQuantity <= quantity) {
-                purchaseCart.remove(product);
+                purchaseCart.remove(product); // removes the product completely from the cart
             } else {
-                product.setQuantity(quantity - currentQuantity);
+                purchaseCart.put( product,quantity - currentQuantity);
             }
 
         } else {
@@ -74,8 +108,18 @@ public class Customer {
 
         return price;
     }
-    public void makeOrder(Customer customer, Product product){
-
+    public void makeOrder(Customer customer) {
+        Order order = new Order(customer);
+        for (Map.Entry<Product, Integer> entry : customer.purchaseCart.entrySet()) {
+            Product product = entry.getKey();
+            int quantity = entry.getValue();
+            order.getProducts().add(product);
+            order.setOrderTotal(order.getOrderTotal() + (product.getPrice() * quantity));
+        }
+        customer.setPurchaseCart(new HashMap<>()); // create a new purchase cart
+        order.setOrderStatus("Placed"); // Update order status
+        System.out.println("Your order has been placed successfully!");
+        System.out.println(order.generateSummary()); // Display order summary
     }
 
 }

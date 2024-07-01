@@ -1,17 +1,43 @@
 package com.ecommerce;
+import com.ecommerce.orders.Order;
+
+import java.util.ArrayList;
+import java.util.UUID;
 
 public class Product {
-    public int productID;
-    public String name;
-    public double price;
+    private UUID productID;
+    private String name;
+    private double price;
 
-    public int quantity;
+    private int quantity;
+
+    public Product(String name, double price, int quantity) {
+        this.productID = UUID.randomUUID();
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+
+    }
+    public Product(){
+        this.productID = UUID.randomUUID();
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "productID=" + productID +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                '}';
+    }
 
     public void setName(String name){
         this.name= name;
-    }
-    public void setProductID(int productID){
-        this.productID= productID;
     }
     public void setPrice(double price){
         this.price= price;
@@ -19,7 +45,7 @@ public class Product {
     public String getName(){
         return name;
     }
-    public int getProductID(){
+    public UUID getProductID(){
         return productID;
     }
     public double getPrice(){
@@ -27,4 +53,5 @@ public class Product {
     }
     public int getQuantity(){return quantity;}
     public void setQuantity( int quantity){ this.quantity= quantity;}
+
 }
