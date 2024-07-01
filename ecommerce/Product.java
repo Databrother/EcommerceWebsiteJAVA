@@ -1,7 +1,5 @@
 package com.ecommerce;
-import com.ecommerce.orders.Order;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
 public class Product {

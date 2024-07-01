@@ -1,11 +1,6 @@
 package com.ecommerce;
 
-import com.ecommerce.orders.Order;
-import com.ecommerce.Customer;
-import com.ecommerce.Product;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,6 +15,7 @@ public class ProgramInterface {
         availableProducts.add(new Product("Shirt", 19.99, 10));
         availableProducts.add(new Product("Jeans", 39.99, 5));
         availableProducts.add(new Product("Shoes", 49.99, 8));
+        availableProducts.add(new Product("snickers",38.99,10));
     }
 
     public void displayInterface() {
@@ -37,7 +33,7 @@ public class ProgramInterface {
             System.out.println("4. Exit");
 
             choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline character after integer input
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
