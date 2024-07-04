@@ -5,12 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-
-
 public class Customer {
     private final UUID customerID;
     private String name;
-    private HashMap<Product, Integer> purchaseCart;
+    protected HashMap<Product, Integer> purchaseCart;
 
     public Customer(){
     this.name = "";
@@ -52,20 +50,19 @@ public class Customer {
 
     public void getPurchaseCart() {
     for(Map.Entry<Product, Integer> entry : purchaseCart.entrySet()){
-        Product product = entry.getKey();
-        int quantity = entry.getValue();
-        System.out.println("you have " + quantity +  " " + product.getName() + " in your cart");
+        if(purchaseCart.isEmpty()){
+            System.out.println("Your cart is empty.");
+        } else {
+            Product product = entry.getKey();
+            int quantity = entry.getValue();
+            System.out.println("you have " + quantity +  " " + product.getName() + " in your cart");
+
+        }
+
     }
 
     }
-    public boolean purchaseCartIsEmpty() {
-        if (purchaseCart.isEmpty()) {
-            System.out.println("Your cart is empty.");
-            return true;
-        } else {
-            return false;
-        }
-    }
+
 
     public void addToCart(Product product, int quantity) {
         if (product.getQuantity()< quantity){ // check if item is not out of stock
@@ -76,7 +73,7 @@ public class Customer {
             System.out.println(purchaseCart.get(product) + " " + product + " have been added successfully");
         } else {
             purchaseCart.put(product,quantity);
-            System.out.println(quantity + " " +  product + "has been added successfully");
+            System.out.println(quantity + " " +  product.getName() + " has been added successfully");
         }
 
 
@@ -88,6 +85,7 @@ public class Customer {
             int currentQuantity = purchaseCart.get(product);
             if (currentQuantity <= quantity) {
                 purchaseCart.remove(product); // removes the product completely from the cart
+                System.out.println("the " + product.getName() + " has been removed");
             } else {
                 purchaseCart.put( product,quantity - currentQuantity);
             }

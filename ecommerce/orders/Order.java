@@ -1,8 +1,6 @@
 package com.ecommerce.orders;
-
 import com.ecommerce.Customer;
 import com.ecommerce.Product;
-
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -12,17 +10,16 @@ public class Order {
     private final Customer customer;
     private final ArrayList<Product> products;
     private double orderTotal;
-    private String orderStatus; // Can be "Placed", "Processing", "Shipped", etc.
+    private String orderStatus;
 
     public Order(Customer customer) {
         this.orderID = UUID.randomUUID();
         this.customer = customer;
         this.products = new ArrayList<>();
         this.orderTotal = 0.0;
-        this.orderStatus = "Placed"; // Default order status
+        this.orderStatus = "Placed";
 
     }
-
     public UUID getOrderID() {
         return orderID;
     }

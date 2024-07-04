@@ -18,10 +18,12 @@ public class Product {
     }
     public Product(){
         this.productID = UUID.randomUUID();
-        this.name = name;
-        this.price = price;
-        this.quantity = quantity;
 
+    }
+
+    public Product(String name) {
+        this.productID = UUID.randomUUID();
+        this.name = name;
     }
 
     @Override
@@ -33,7 +35,6 @@ public class Product {
                 ", quantity=" + quantity +
                 '}';
     }
-
     public void setName(String name){
         this.name= name;
     }
